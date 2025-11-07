@@ -28,12 +28,12 @@ repos:
         entry: npx cspell
         language: node
         files: "\\.md$"
-        exclude: "^(01|02)_markdown_quality_assurance_.*\\.md$"
+        exclude: "^(01|02)_markdown_quality_assurance_.*\\.md$|README\\.md|CHECK_REPORT\\.md|AGENTS\\.md"
         pass_filenames: true
       - id: prettier
         name: prettier
         entry: npx prettier --check
         language: node
         files: "\\.md$"
-        exclude: "^(01|02)_markdown_quality_assurance_.*\\.md$"
+        exclude: "^(01|02)_markdown_quality_assurance_.*\\.md$|README\\.md|CHECK_REPORT\\.md|AGENTS\\.md"
         pass_filenames: true
