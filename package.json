@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint:md": "markdownlint \"**/*.md\" --config config/lint/.markdownlint.jsonc --ignore-path config/lint/.markdownlintignore",
+    "lint:text": "textlint \"**/*.md\" --config config/lint/.textlintrc --ignore-path config/lint/.textlintignore",
+    "lint:spell": "cspell \"**/*.md\" --config config/lint/.cspell.json",
+    "format": "prettier \"**/*.md\" --config config/lint/.prettierrc --write",
+    "test": "npm run lint:md && npm run lint:text && npm run lint:spell"
   },
   "keywords": [],
   "author": "",

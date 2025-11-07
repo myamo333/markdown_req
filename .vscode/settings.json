@@ -6,5 +6,6 @@
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "cSpell.configFile": "${workspaceFolder}/.cspell.json"
+  "cSpell.configFile": "${workspaceFolder}/config/lint/.cspell.json",
+  "prettier.configPath": "${workspaceFolder}/config/lint/.prettierrc"
 }

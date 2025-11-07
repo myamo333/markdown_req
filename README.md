@@ -2,11 +2,10 @@
 
 このリポジトリは、以下の設計ドキュメントに基づき Markdown 要件定義書の品質保証ラインを構築・共有するためのテンプレートです。
 
-- `01_markdown_quality_assurance_combined.md`
-- `02_markdown_quality_assurance_formatted_guide.md`
+- `docs/01_markdown_quality_assurance_combined.md`
+- `docs/02_markdown_quality_assurance_formatted_guide.md`
 
-開発者は本READMEに沿って環境をセットアップし、Lint／Prettier／pre-commit／GitHub
-Actions を組み合わせたチェックフローを再現してください。
+開発者は本READMEに沿って環境をセットアップし、Lint／Prettier／pre-commit／GitHub Actions を組み合わせたチェックフローを再現してください。
 
 ## 1. 前提条件
 
@@ -16,8 +15,12 @@ Actions を組み合わせたチェックフローを再現してください。
 - **Git**: 2.30 以上（フック動作用）
 - **VS Code**: 最新安定版（Lint拡張と保存時整形に使用）
 - **パッケージマネージャ**: npm を前提
-- **リポジトリ構成**: ルート直下にLint/Formatter/辞書/CI設定、`.vscode/` と
-  `.github/workflows/` を併設
+- **リポジトリ構成**:
+  - `config/lint/`: markdownlint / textlint / cspell / prettier / prh などの設定
+  - `requirements/`: 要件サンプル（`sample_requirement.md`）や今後の要件書
+  - `docs/`: 参考資料 (`01/02` ガイド、`CHECK_REPORT.md`, `AGENTS.md` など)
+  - `.github/workflows/`: CI
+  - `.vscode/`: VS Code 共有設定
 
 ## 2. セットアップ手順
 
@@ -57,32 +60,29 @@ pre-commit install
 ### 2.3 初回チェック
 
 ```bash
-npx markdownlint "**/*.md"
-npx textlint "**/*.md"
-npx cspell "**/*.md"
+npm run lint:md     # markdownlint + config/lint/.markdownlint.jsonc
+npm run lint:text   # textlint + config/lint/.textlintrc
+npm run lint:spell  # cspell + config/lint/.cspell.json
 ```
 
 各コマンドで確認できる内容：
 
-- `markdownlint`：見出しレベルや箇条書きの書き方、空行などMarkdown構文ルールの崩れを検出し、章構造やリストが崩れていないかを素早く把握できます。
-- `textlint`：文体（である/ですます混在）や句読点、prh辞書による表記ゆれをチェックし、文章の品質と用語統一が守られているかを確認します。
-- `cspell`：Markdown内の専門語・英単語を辞書参照で綴りチェックし、略語や信号名のタイプミスをコミット前に見つけられます。
+- `lint:md`：見出しレベルや箇条書きの書き方、空行などMarkdown構文ルールの崩れを検出し、章構造やリストが崩れていないかを素早く把握できます。
+- `lint:text`：文体（である/ですます混在）や句読点、prh辞書による表記ゆれをチェックし、文章の品質と用語統一が守られているかを確認します。
+- `lint:spell`：Markdown内の専門語・英単語を辞書参照で綴りチェックし、略語や信号名のタイプミスをコミット前に見つけられます。
 
-Lint警告が出る既存ドキュメント（01/02のガイド）は `.markdownlintignore` /
-`.textlintignore` / `.cspell.json` の `ignorePaths` で除外済みです。  
-要件サンプル（`sample_requirement.md`）は常にLint対象として残してあり、動作確認に利用できます。別の参照資料を対象外にしたい場合は、これらのファイル群へパスを追記すると CLI /
-pre-commit / CI が一括で無視します。必要に応じて `.pre-commit-config.yaml` の
-`exclude` にも同じパターンを追加してください。
+Lint警告が出る既存ドキュメント（docs配下の01/02ガイドや参照資料）は `config/lint/.markdownlintignore` / `.textlintignore` / `.cspell.json` の `ignorePaths` で除外済みです。  
+要件サンプル（`requirements/sample_requirement.md`）は常にLint対象として残してあり、動作確認に利用できます。別の参照資料を対象外にしたい場合は、これらの設定ファイルへパスを追記すると CLI / pre-commit / CI が一括で無視します。必要に応じて `.pre-commit-config.yaml` の `exclude` にも同じパターンを追加してください。
 
 ## 3. 設定ファイル一覧
 
 | ファイル                           | 役割               | 備考                                                                    |
 | ---------------------------------- | ------------------ | ----------------------------------------------------------------------- |
-| `.markdownlint.jsonc`              | Markdown構文ルール | ATX見出し、2スペースインデント、長文許容などを定義                      |
-| `.textlintrc`                      | 文体・表記統一     | `preset-japanese` + `max-ten` + `no-mix-dearu-desumasu` + `prh.yml`     |
-| `.cspell.json`                     | スペルチェック辞書 | `words` にドメイン語を追加し、`ignorePaths` で `node_modules` を除外    |
-| `prh.yml`                          | 用語辞書           | 「ドライバ/センサ/アクチュエータ/CAN」などの表記ゆれを吸収              |
-| `.prettierrc`                      | 保存時整形         | 2スペース・`proseWrap: "always"` 等でMarkdownフォーマットを固定         |
+| `config/lint/.markdownlint.jsonc`  | Markdown構文ルール | ATX見出し、2スペースインデント、長文許容などを定義                      |
+| `config/lint/.textlintrc`          | 文体・表記統一     | `preset-japanese` + `max-ten` + `no-mix-dearu-desumasu` + `prh.yml`     |
+| `config/lint/.cspell.json`         | スペルチェック辞書 | `words` にドメイン語を追加し、`ignorePaths` で `docs/` の資料を除外     |
+| `config/lint/prh.yml`              | 用語辞書           | 「ドライバ/センサ/アクチュエータ/CAN」などの表記ゆれを吸収              |
+| `config/lint/.prettierrc`          | 保存時整形         | 2スペース・`proseWrap: "always"` 等でMarkdownフォーマットを固定         |
 | `.vscode/settings.json`            | VS Code共有設定    | `formatOnSave` と `cSpell.configFile` をプロジェクト全体に適用          |
 | `.pre-commit-config.yaml`          | Gitフック設定      | `markdownlint`, `textlint`, `cspell`, `prettier` などをコミット前に実行 |
 | `.github/workflows/lint-check.yml` | CI                 | PR作成時に `npm ci` → 各Lintを再実行                                    |
@@ -113,14 +113,14 @@ pre-commit / CI が一括で無視します。必要に応じて `.pre-commit-co
 pre-commit run --all-files
 
 # 単体チェック
-npx markdownlint sample_requirement.md
-npx textlint sample_requirement.md
-npx cspell sample_requirement.md
+npx markdownlint requirements/sample_requirement.md --config config/lint/.markdownlint.jsonc --ignore-path config/lint/.markdownlintignore
+npx textlint requirements/sample_requirement.md --config config/lint/.textlintrc --ignore-path config/lint/.textlintignore
+npx cspell requirements/sample_requirement.md --config config/lint/.cspell.json
 ```
 
 ## 6. 動作確認シナリオ
 
-1. `sample_requirement.md`
+1. `requirements/sample_requirement.md`
    を編集して意図的に「ドライバー」「センサー」など表記ゆれを入れる。
 2. VS Code 上で textlint/prh 警告が出ることを確認。
 3. `git add sample_requirement.md` → `git commit`

@@ -4,19 +4,15 @@
 
 ## 1. Lint/Format運用の固定ルール
 
-- `README.md` は常に lint / textlint / cspell / prettier の対象 **外**
-  にする。`.markdownlintignore` / `.textlintignore` / `.cspell.json` /
-  `.pre-commit-config.yaml` に同じパターンを設定済みであり、今後も維持すること。
-- `sample_requirement.md` は動作確認用サンプルとして
-  **必ずチェック対象に残す**。除外設定へ追加しないこと。
+- `README.md` は常に lint / textlint / cspell / prettier の対象 **外** にする。`config/lint/.markdownlintignore` / `.textlintignore` / `.cspell.json` / `.pre-commit-config.yaml` に同じパターンを設定済みであり、今後も維持すること。
+- `requirements/sample_requirement.md` は動作確認用サンプルとして **必ずチェック対象に残す**。除外設定へ追加しないこと。
 - 新しい Markdown を生成・投入する際は、**必ず pre-commit のルール（markdownlint
   / textlint / cspell / prettier）を満たした状態で提出する**。自動生成でも
   `npx prettier --write`
   などを通し、フックで落ちないことを確認してからコミットする。
-- 参照資料 `01_markdown_quality_assurance_combined.md` /
-  `02_markdown_quality_assurance_formatted_guide.md` / `CHECK_REPORT.md`
-  は既定で無視対象。新たに資料を増やして除外したい場合は、上記4ファイルと同じ設定ファイルすべて（ignore
-  / exclude）を忘れず更新する。
+- 参照資料 `docs/01_markdown_quality_assurance_combined.md` /
+  `docs/02_markdown_quality_assurance_formatted_guide.md` /
+  `docs/CHECK_REPORT.md` / `docs/AGENTS.md` は既定で無視対象。新たに資料を増やして除外したい場合は、同じ設定ファイルすべて（ignore / exclude）を忘れず更新する。
 
 ## 2. pre-commit / CLI 実行時の注意
 
@@ -38,11 +34,11 @@
 
 ## 4. ドキュメントメンテ
 
-- `CHECK_REPORT.md` に最新の `markdownlint` / `textlint` / `cspell`
+- `docs/CHECK_REPORT.md` に最新の `markdownlint` / `textlint` / `cspell`
   実行結果をMarkdownで記録する運用。更新時は日付も書き換える。
 - `README.md` は品質ライン全体の手順書として扱うが、Lint対象外とする制約を守る。
-- `prh.yml` で表記ゆれ（ドライバ/センサなど）を統制している。辞書追加時は
-  `.textlintrc` の `prh.rulePaths` が指す `prh.yml` のみを編集する。
+- `config/lint/prh.yml` で表記ゆれ（ドライバ/センサなど）を統制している。辞書追加時は
+  `config/lint/.textlintrc` の `prh.rulePaths` が指すファイルのみを編集する。
 
 ## 5. 追加で守るべきこと
 
