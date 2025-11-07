@@ -3,9 +3,9 @@ repos:
     rev: v4.4.0
     hooks:
       - id: trailing-whitespace
-        exclude: "^(01|02)_markdown_quality_assurance_.*\\.md$|README\\.md|CHECK_REPORT\\.md|sample_requirement\\.md"
+        exclude: "^(01|02)_markdown_quality_assurance_.*\\.md$|README\\.md|CHECK_REPORT\\.md|AGENTS\\.md"
       - id: end-of-file-fixer
-        exclude: "^(01|02)_markdown_quality_assurance_.*\\.md$|README\\.md|CHECK_REPORT\\.md|sample_requirement\\.md"
+        exclude: "^(01|02)_markdown_quality_assurance_.*\\.md$|README\\.md|CHECK_REPORT\\.md|AGENTS\\.md"
 
   - repo: local
     hooks:
@@ -14,14 +14,14 @@ repos:
         entry: npx markdownlint-cli
         language: node
         files: "\\.md$"
-        exclude: "^(01|02)_markdown_quality_assurance_.*\\.md$|README\\.md|CHECK_REPORT\\.md|sample_requirement\\.md"
+        exclude: "^(01|02)_markdown_quality_assurance_.*\\.md$|README\\.md|CHECK_REPORT\\.md|AGENTS\\.md"
         pass_filenames: true
       - id: textlint
         name: textlint
         entry: npx textlint
         language: node
         files: "\\.md$"
-        exclude: "^(01|02)_markdown_quality_assurance_.*\\.md$|README\\.md|CHECK_REPORT\\.md|sample_requirement\\.md"
+        exclude: "^(01|02)_markdown_quality_assurance_.*\\.md$|README\\.md|CHECK_REPORT\\.md|AGENTS\\.md"
         pass_filenames: true
       - id: cspell
         name: cspell
