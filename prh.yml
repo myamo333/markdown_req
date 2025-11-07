@@ -1,0 +1,14 @@
+rules:
+  - expected: ドライバ
+    patterns:
+      - ドライバー
+  - expected: センサ
+    patterns:
+      - センサー
+  - expected: アクチュエータ
+    patterns:
+      - アクチュエーター
+  - expected: CAN
+    patterns:
+      - Can
+      - can

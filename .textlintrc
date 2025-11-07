@@ -1,0 +1,12 @@
+{
+  "rules": {
+    "preset-japanese": true,
+    "max-ten": {
+      "max": 3
+    },
+    "no-mix-dearu-desumasu": true,
+    "prh": {
+      "rulePaths": ["prh.yml"]
+    }
+  }
+}
