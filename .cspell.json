@@ -1,6 +1,19 @@
 {
   "version": "0.2",
   "language": "ja",
-  "words": ["AEB", "CAN", "ECU", "PCS", "reqid"],
-  "ignorePaths": ["node_modules"]
+  "words": [
+    "AEB",
+    "CAN",
+    "ECU",
+    "PCS",
+    "reqid"
+  ],
+  "ignorePaths": [
+    "node_modules",
+    "01_markdown_quality_assurance_combined.md",
+    "02_markdown_quality_assurance_formatted_guide.md",
+    "CHECK_REPORT.md",
+    "README.md",
+    "sample_requirement.md"
+  ]
 }
