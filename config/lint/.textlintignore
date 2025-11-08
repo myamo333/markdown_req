@@ -1,6 +1,3 @@
 node_modules/
-../../docs/01_markdown_quality_assurance_combined.md
-../../docs/02_markdown_quality_assurance_formatted_guide.md
-../../docs/CHECK_REPORT.md
-../../docs/AGENTS.md
-../../README.md
+docs/**
+README.md

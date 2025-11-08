@@ -17,7 +17,7 @@
 - **パッケージマネージャ**: npm を前提
 - **リポジトリ構成**:
   - `config/lint/`: markdownlint / textlint / cspell / prettier / prh などの設定
-  - `requirements/`: 要件サンプル（`sample_requirement.md`）や今後の要件書
+  - `requirements/`: 要件サンプル（`sample_requirement.md`）、安全ガイドラインなどの実ファイルを配置
   - `docs/`: 参考資料 (`01/02` ガイド、`CHECK_REPORT.md`, `AGENTS.md` など)
   - `.github/workflows/`: CI
   - `.vscode/`: VS Code 共有設定
