@@ -9,31 +9,39 @@ repos:
 
   - repo: local
     hooks:
-      - id: markdownlint
-        name: markdownlint
-        entry: npx markdownlint-cli --config config/lint/.markdownlint.jsonc --ignore-path config/lint/.markdownlintignore
+      - id: markdownlint-requirements
+        name: markdownlint (requirements)
+        entry: npx markdownlint-cli --config requirements/.markdownlint.jsonc --ignore-path config/lint/.markdownlintignore
         language: node
-        files: "\\.md$"
-        exclude: "^(docs/(?:01|02)_markdown_quality_assurance_.*\\.md|docs/CHECK_REPORT\\.md|docs/AGENTS\\.md|README\\.md)$"
+        files: "^requirements/.*\\.md$"
         pass_filenames: true
-      - id: textlint
-        name: textlint
-        entry: npx textlint --config config/lint/.textlintrc --ignore-path config/lint/.textlintignore
+      - id: markdownlint-soft
+        name: markdownlint (soft requirements)
+        entry: npx markdownlint-cli --config soft_requirements/.markdownlint.jsonc --ignore-path config/lint/.markdownlintignore
         language: node
-        files: "\\.md$"
-        exclude: "^(docs/(?:01|02)_markdown_quality_assurance_.*\\.md|docs/CHECK_REPORT\\.md|docs/AGENTS\\.md|README\\.md)$"
+        files: "^soft_requirements/.*\\.md$"
+        pass_filenames: true
+      - id: textlint-requirements
+        name: textlint (requirements)
+        entry: npx textlint --config requirements/.textlintrc --ignore-path config/lint/.textlintignore
+        language: node
+        files: "^requirements/.*\\.md$"
+        pass_filenames: true
+      - id: textlint-soft
+        name: textlint (soft requirements)
+        entry: npx textlint --config soft_requirements/.textlintrc --ignore-path config/lint/.textlintignore
+        language: node
+        files: "^soft_requirements/.*\\.md$"
         pass_filenames: true
       - id: cspell
         name: cspell
         entry: npx cspell --config config/lint/.cspell.json
         language: node
-        files: "\\.md$"
-        exclude: "^(docs/(?:01|02)_markdown_quality_assurance_.*\\.md|docs/CHECK_REPORT\\.md|docs/AGENTS\\.md|README\\.md)$"
+        files: "^(requirements|soft_requirements)/.*\\.md$"
         pass_filenames: true
       - id: prettier
         name: prettier
         entry: npx prettier --config config/lint/.prettierrc --check
         language: node
-        files: "\\.md$"
-        exclude: "^(docs/(?:01|02)_markdown_quality_assurance_.*\\.md|docs/CHECK_REPORT\\.md|docs/AGENTS\\.md|README\\.md)$"
+        files: "^(requirements|soft_requirements)/.*\\.md$"
         pass_filenames: true

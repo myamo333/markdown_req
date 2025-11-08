@@ -1,0 +1,11 @@
+{
+  "extends": ["../config/lint/.textlintrc"],
+  "rules": {
+    "max-ten": {
+      "max": 3
+    },
+    "no-mix-dearu-desumasu": {
+      "preferInHeader": "である"
+    }
+  }
+}

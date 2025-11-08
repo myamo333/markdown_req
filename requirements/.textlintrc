@@ -1,0 +1,8 @@
+{
+  "extends": ["../config/lint/.textlintrc"],
+  "rules": {
+    "max-ten": {
+      "max": 4
+    }
+  }
+}

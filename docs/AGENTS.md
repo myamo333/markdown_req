@@ -5,14 +5,15 @@
 ## 1. Lint/Format運用の固定ルール
 
 - `README.md` は常に lint / textlint / cspell / prettier の対象 **外** にする。`config/lint/.markdownlintignore` / `.textlintignore` / `.cspell.json` / `.pre-commit-config.yaml` に同じパターンを設定済みであり、今後も維持すること。
-- `requirements/sample_requirement.md` は動作確認用サンプルとして **必ずチェック対象に残す**。除外設定へ追加しないこと。
+- `requirements/` 配下は `requirements/.markdownlint.jsonc` / `.textlintrc` でローカルルールを上書きできるが、`sample_requirement.md` は常にチェック対象に残す。
+- `soft_requirements/` も同様に `.markdownlint.jsonc` / `.textlintrc` を持ち、ソフトウェア要件特有のルールを適用している。
 - 新しい Markdown を生成・投入する際は、**必ず pre-commit のルール（markdownlint
   / textlint / cspell / prettier）を満たした状態で提出する**。自動生成でも
   `npx prettier --write`
   などを通し、フックで落ちないことを確認してからコミットする。
 - 参照資料 `docs/01_markdown_quality_assurance_combined.md` /
   `docs/02_markdown_quality_assurance_formatted_guide.md` /
-  `docs/CHECK_REPORT.md` / `docs/AGENTS.md` は既定で無視対象。新たに資料を増やして除外したい場合は、同じ設定ファイルすべて（ignore / exclude）を忘れず更新する。
+  `docs/CHECK_REPORT.md` / `docs/AGENTS.md` は既定で無視対象。新たに資料を増やして除外したい場合は、`config/lint/.markdownlintignore` / `.textlintignore` / `.cspell.json` を更新する。
 
 ## 2. pre-commit / CLI 実行時の注意
 

@@ -17,7 +17,8 @@
 - **パッケージマネージャ**: npm を前提
 - **リポジトリ構成**:
   - `config/lint/`: markdownlint / textlint / cspell / prettier / prh などの設定
-  - `requirements/`: 要件サンプル（`sample_requirement.md`）、安全ガイドラインなどの実ファイルを配置
+  - `requirements/`: 要件サンプル（`sample_requirement.md`）など実要件を配置。ディレクトリ直下の`.markdownlint.jsonc` / `.textlintrc`でルールを上書き可能
+  - `soft_requirements/`: ソフトウェア要件（`autonomous_software_requirements.md` など）を配置し、独自のローカルLint設定を持つ
   - `docs/`: 参考資料 (`01/02` ガイド、`CHECK_REPORT.md`, `AGENTS.md` など)
   - `.github/workflows/`: CI
   - `.vscode/`: VS Code 共有設定
@@ -60,19 +61,28 @@ pre-commit install
 ### 2.3 初回チェック
 
 ```bash
-npm run lint:md     # markdownlint + config/lint/.markdownlint.jsonc
-npm run lint:text   # textlint + config/lint/.textlintrc
-npm run lint:spell  # cspell + config/lint/.cspell.json
+# requirements ディレクトリ向け
+npm run lint:req:md
+npm run lint:req:text
+
+# soft_requirements ディレクトリ向け
+npm run lint:soft:md
+npm run lint:soft:text
+
+# 両方まとめて & スペルチェック
+npm run lint:md
+npm run lint:text
+npm run lint:spell
 ```
 
 各コマンドで確認できる内容：
 
-- `lint:md`：見出しレベルや箇条書きの書き方、空行などMarkdown構文ルールの崩れを検出し、章構造やリストが崩れていないかを素早く把握できます。
-- `lint:text`：文体（である/ですます混在）や句読点、prh辞書による表記ゆれをチェックし、文章の品質と用語統一が守られているかを確認します。
-- `lint:spell`：Markdown内の専門語・英単語を辞書参照で綴りチェックし、略語や信号名のタイプミスをコミット前に見つけられます。
+- `lint:req:md` / `lint:soft:md`：ディレクトリ固有の `.markdownlint.jsonc` を利用して、章構成や許容行長などのルールを検証。
+- `lint:req:text` / `lint:soft:text`：各フォルダの `.textlintrc` を参照し、文体や句読点の厳しさをフォルダ単位で調整。
+- `lint:spell`：`requirements` と `soft_requirements` のみを対象に cspell を実行し、ドメイン固有語を辞書で管理。
 
-Lint警告が出る既存ドキュメント（docs配下の01/02ガイドや参照資料）は `config/lint/.markdownlintignore` / `.textlintignore` / `.cspell.json` の `ignorePaths` で除外済みです。  
-要件サンプル（`requirements/sample_requirement.md`）は常にLint対象として残してあり、動作確認に利用できます。別の参照資料を対象外にしたい場合は、これらの設定ファイルへパスを追記すると CLI / pre-commit / CI が一括で無視します。必要に応じて `.pre-commit-config.yaml` の `exclude` にも同じパターンを追加してください。
+Lint警告が出る既存ドキュメント（docs配下の資料）は `config/lint/.markdownlintignore` / `.textlintignore` / `.cspell.json` の `ignorePaths` で除外済みです。  
+各フォルダでルールを緩和したい場合は、`requirements/.markdownlint.jsonc` や `soft_requirements/.textlintrc` のみ編集すれば、他フォルダへ影響せずに運用できます。
 
 ## 3. 設定ファイル一覧
 
