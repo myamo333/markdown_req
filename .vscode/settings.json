@@ -1,9 +1,10 @@
 {
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"
   },
   "[markdown]": {
+    "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "cSpell.configFile": "${workspaceFolder}/config/lint/.cspell.json",
