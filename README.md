@@ -128,6 +128,30 @@ npx textlint requirements/sample_requirement.md --config config/lint/.textlintrc
 npx cspell requirements/sample_requirement.md --config config/lint/.cspell.json
 ```
 
+### `pre-commit run --all-files` で行われるチェック
+
+`pre-commit` は `.pre-commit-config.yaml` で定義された順に以下のフックを実行します。`--all-files` を付けるとステージ状態に関係なく対象ディレクトリ全体を検査します。
+
+1. **trailing-whitespace**（末尾スペースを削除）
+2. **end-of-file-fixer**（ファイル末尾の改行を強制）
+3. **markdownlint (requirements / soft requirements)**（それぞれの `.markdownlint.jsonc` を使用）
+4. **textlint (requirements / soft requirements)**（`prh` を含むルールで文体チェック）
+5. **cspell**（`config/lint/.cspell.json` の辞書）
+6. **prettier**（`config/lint/.prettierrc` に沿った整形差分が無いか確認）
+
+### フックが `Failed` になった場合の対処
+
+| フック名                            | 代表的なエラー例                                   | 解消手順                                                                                                                                         |
+| ----------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| trailing-whitespace / end-of-file   | `Fixing newline at end of file` など               | VS Code の `Trim Trailing Whitespace` を実行、もしくは `pre-commit run trailing-whitespace --all-files` で自動修正。                              |
+| markdownlint (requirements / soft)  | `MD0xx` 番号の警告                                | `npx markdownlint <file> --config <dir>/.markdownlint.jsonc --fix` で自動修正し、ルールに沿わない箇所を整形。                                     |
+| textlint (requirements / soft)      | `[prh] ドライバー => ドライバ` 等のルール違反      | `npx textlint --config <dir>/.textlintrc --fix <file>` を実行し、自動修正または文面修正。                                                        |
+| cspell                              | `Unknown word (xxx)`                               | 用語が正しいなら `config/lint/.cspell.json` の `words` に追記。誤字であれば本文を修正。                                                         |
+| prettier                            | `Checking formatting... [warn] <file>`             | `npx prettier --config config/lint/.prettierrc --write <file>` または `npm run format` を実行して整形し、再度 `pre-commit run --all-files`。     |
+
+> どのフックも基本的には「指摘箇所の修正 → 同じフックを再実行」で解消できます。  
+> それでも失敗する場合は `pre-commit run <hook-id> --all-files` のように個別実行して詳細ログを確認してください。
+
 ## 6. 動作確認シナリオ
 
 1. `requirements/sample_requirement.md`
