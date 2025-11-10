@@ -1,8 +1,13 @@
 {
-  "extends": ["../config/lint/.textlintrc"],
   "rules": {
+    "preset-japanese": true,
     "max-ten": {
       "max": 4
+    },
+    "no-mix-dearu-desumasu": true,
+    "prh": {
+      "rulePaths": ["../config/lint/prh.yml"],
+      "checkBlockQuote": true
     }
   }
 }
